@@ -13,17 +13,22 @@ class make_h5:
         print()
 
         print("Enter the length of the data.")
-        self.data_length = int(input())
+        self.data_length = int(input(": "))
         print()
 
-        print("Where do you want to save this .h5 file? Enter the path, including file name.")
-        self.save_pth = input()
+        print("Where do you want to save this .h5 file? Enter the dir.")
+        self.save_pth = input(": ")
         print()
 
-        while not self.save_pth.endswith(".h5"):
-            print("Path must include FILE NAME.!")
+        while self.save_pth.endswith(".h5"):
+            print("Dir must not include FILE NAME.!")
             self.save_pth = input("Try again: ")
             print()
+
+        print("What do you want for your file name?")
+        self.file_name = input(": ")
+        print()
+        self.save_pth += f"/{self.file_name}.h5"
 
         while True:
             if Path(self.save_pth).exists():
@@ -35,13 +40,15 @@ class make_h5:
                 print()
 
                 selection = "thisisnotaselection"
-                while selection != "0" or selection != "1":
+                while selection != "0" and selection != "1":
                     selection = input("Choose the numeber: ")
                 selection = int(selection)
 
                 if selection == 1:
                     o5 = openh5.openh5()
                     o5.do_sth()
+                else:
+                    self.h5_file = h5py.File(self.save_pth, "w")
                 break
 
             else:
@@ -56,7 +63,8 @@ class make_h5:
                     print()
 
                 if ans == "y":
-                    Path(self.save_pth).mkdir(exist_ok=True, parents=True)
+                    Path(self.save_pth).parent.mkdir(exist_ok=True, parents=True)
+                    self.h5_file = h5py.File(self.save_pth, "w")
                     if not Path(self.save_pth).is_file():
                         print("Your file path is not an .h5 file.!")
                         Path(self.save_pth).rmdir()
@@ -71,8 +79,6 @@ class make_h5:
 
         print(f"Your file will be in [{self.save_pth}].!")
         print()
-
-        self.h5_file = h5py.File(self.save_pth, "w")
 
         for key in self.key_list:
             if key == "wav":
