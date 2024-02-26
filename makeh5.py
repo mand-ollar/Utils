@@ -9,6 +9,7 @@ import openh5
 class make_h5:
     def __init__(self):
         print("Enter the keys you want to make an .h5 file with.")
+        print("ex) wav set label source meta")
         self.key_list = list(sys.stdin.readline().split())
         print()
 
@@ -17,6 +18,7 @@ class make_h5:
         print()
 
         print("Where do you want to save this .h5 file? Enter the dir.")
+        print("Do not inclue / at the end of the path and do not include the file name.")
         self.save_pth = input(": ")
         print()
 
@@ -26,6 +28,7 @@ class make_h5:
             print()
 
         print("What do you want for your file name?")
+        print("Do not include .h5 at the end of the file name.")
         self.file_name = input(": ")
         print()
         self.save_pth += f"/{self.file_name}.h5"

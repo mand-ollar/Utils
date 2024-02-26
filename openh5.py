@@ -121,7 +121,6 @@ class openh5:
                         print()
 
 
-
 if __name__ == "__main__":
     open_h5 = openh5()
     open_h5.do_sth()
