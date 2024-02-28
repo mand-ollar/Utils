@@ -12,5 +12,5 @@ Make h5 file with key, data_length, etc. information.
 Check config file spelling error.
 
 ## deeply_evaluation_set
-Evaluation data folder. 
+Evaluation data folder.  
 Containing data of various classes.
