@@ -13,4 +13,4 @@ Check config file spelling error.
 
 ## deeply_evaluation_set
 Evaluation data folder.  
-Containing data of various classes.
+Contains data of various classes.
