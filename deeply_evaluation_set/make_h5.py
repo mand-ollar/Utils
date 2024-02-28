@@ -1,34 +1,48 @@
+from pathlib import Path
+
 import h5py
 import numpy as np
 from tqdm import tqdm
-import os
-import torchaudio
-import torch
+
 from utils import get_evaluation_data
 from utils import check_by_make_wav
+import check_stat
+
 
 # class dictionary
-classes = {'baby_crying': 0, 'baby_laughter': 1, 'breath': 2, 'cat': 3, 'cough': 4, 'dog': 5, 'doorbell': 6, 'knock': 7, 'sneeze': 8, 'snoring': 9, 
-           'speech': 10, 'throat_clearing': 11, 'vaccum_cleaner': 12, 'gunshot': 13, 'scream': 14, 'glass_break': 15}
+classes = {'baby_crying': 0,
+           'baby_laughter': 1,
+           'breath': 2,
+           'cat': 3,
+           'cough': 4,
+           'dog': 5,
+           'doorbell': 6,
+           'knock': 7,
+           'sneeze': 8,
+           'snoring': 9, 
+           'speech': 10,
+           'throat_clearing': 11,
+           'vaccum_cleaner': 12,
+           'gunshot': 13,
+           'scream': 14,
+           'glass_break': 15,
+           }
 reverse_classes = {v: k for k, v in classes.items()}
 
 # sort folder list by order of classes dictionary
-folder = 'src'
-class_folder = sorted(
-                    [f for f in os.listdir(folder) if f != '.DS_Store'], 
-                    key = lambda x: classes.get(x)
-                    )
-
+current_dir = Path(__file__).parent
+src_folder = current_dir/'src'
+class_folder = sorted([f.name for f in Path(src_folder).iterdir() if f.is_dir()],
+                      key = lambda x: classes.get(x),
+                      )
 
 final_data = []
 
-for i in range(len(classes.keys())):
+for i in range(len(classes)):
     label = i
-    data = get_evaluation_data(folder, class_folder, resample = 16000, label = i)
+    data = get_evaluation_data(src_folder, class_folder, resample = 16000, label = i)
     check_by_make_wav(data, reverse_classes[label], sr = 16000)
     final_data += data
-
-
 
 total_len = len(final_data)
 h5 = h5py.File('Deeply_evaluation.h5', 'w')
@@ -47,7 +61,7 @@ for i in range(total_len):
     h5['meta'][c] = final_data[i][2]
     c += 1
 
-
+check_stat.check_stat()
 
 
 
