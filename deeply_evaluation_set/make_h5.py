@@ -45,7 +45,7 @@ for i in range(len(classes)):
     final_data += data
 
 total_len = len(final_data)
-h5 = h5py.File('Deeply_evaluation.h5', 'w')
+h5 = h5py.File(current_dir/"Deeply_evaluation.h5", "w")
 dt1 = h5py.special_dtype(vlen=np.dtype('float32'))
 dt2 = h5py.string_dtype(encoding='utf-8')
 h5.create_dataset('wav', (total_len,), dtype = dt1)
@@ -60,7 +60,10 @@ for i in range(total_len):
     h5['label'][c] = final_data[i][1]
     h5['meta'][c] = final_data[i][2]
     c += 1
+print("Evaluation dataset is saved at .../deeply_evaluation_set/Deeply_evaluation.h5")
+print()
 
+print("EVALUATION SET STATUS")
 check_stat.check_stat()
 
 

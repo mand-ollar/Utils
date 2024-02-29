@@ -14,3 +14,6 @@ Check config file spelling error.
 ## deeply_evaluation_set
 Evaluation data folder.  
 Contains data of various classes.
+
+## split_data
+Split set by train / valid.
