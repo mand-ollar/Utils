@@ -1,6 +1,7 @@
 import h5py
 import numpy as np
 import soundfile as sf
+from tqdm import tqdm
 
 from pathlib import Path
 import shutil
@@ -58,8 +59,13 @@ class openh5:
                     print()
 
                 length = len(self.file[key])
-                unique_values = np.unique(np.array(self.file[key])).astype(str)
-                print(f"{list(unique_values)} in [{key}].")
+                if key != "wav" and key != "meta":
+                    values_array = np.array(self.file[key]).astype(str)
+                    for i, value in enumerate(tqdm(values_array)):
+                        if "-" in value:
+                            values_array[i] = value.split("-")[0]
+                    unique_values = np.unique(values_array).astype(str)
+                    print(f"{list(unique_values)} in [{key}].")
                 print(f"Which index do you want from {length} indexes?")
                 print("Enter exit() to exit, changekeys() to change keys.")
                 
