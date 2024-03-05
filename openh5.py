@@ -1,4 +1,5 @@
 import h5py
+import numpy as np
 import soundfile as sf
 
 from pathlib import Path
@@ -32,6 +33,7 @@ class openh5:
         print("1. View keys list.")
         print("2. View keys list and the contents.")
         choice = input(": ")
+        print()
 
         if choice == "1":
             self._list_keys()
@@ -56,6 +58,8 @@ class openh5:
                     print()
 
                 length = len(self.file[key])
+                unique_values = np.unique(np.array(self.file[key])).astype(str)
+                print(f"{list(unique_values)} in [{key}].")
                 print(f"Which index do you want from {length} indexes?")
                 print("Enter exit() to exit, changekeys() to change keys.")
                 
