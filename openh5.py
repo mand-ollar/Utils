@@ -60,13 +60,13 @@ class openh5:
                 print("Enter exit() to exit, changekeys() to change keys.")
                 
                 idx = "thisisnotanindex"
-                while idx != "exit()":
+                while idx != "exit()" and idx != "e":
                     idx = input(": ")
                     print()
 
-                    if idx == "exit()":
+                    if idx == "exit()" or idx == "e":
                         break
-                    elif idx == "changekeys()":
+                    elif idx == "changekeys()" or idx == "c":
                         change_keys = True
                         break
                     elif idx.isdigit() and int(idx) >= length:
@@ -108,7 +108,7 @@ class openh5:
                                 done_sign = input("Enter done() if you're done listening: ")
                                 print()
                                 
-                                if done_sign == "done()":
+                                if done_sign == "done()" or done_sign == "d":
                                     print("Deleting file...")
                                     print()
                                     shutil.rmtree(cache_pth)

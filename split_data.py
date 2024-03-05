@@ -2,12 +2,10 @@ import random
 import time
 import os
 import json
-import shutil
 from pathlib import Path
 
 import h5py
 import numpy as np
-import keyboard
 from tqdm import tqdm
 from sklearn.model_selection import StratifiedGroupKFold
 
@@ -170,21 +168,24 @@ class splitData:
                 while not answer:
                     print(f"Your h5 file path is {file_pth}. [y/n]?")
                     answer = input(": ")
+                    print()
 
                     if answer.lower() == "y":
                         check_file = _check_file(file_pth)
                         if not check_file:
                             print("File path is not valid. Please enter a valid path.")
+                            file_pth = None
                             print()
 
                     elif answer.lower() == "n":
                         file_pth = None
-                        print()
 
                     else:
                         print("Please input 'y' or 'n'.")
                         print()
                         answer = None
+
+        self.file_pth = Path(file_pth)
 
         # Load h5 file
         self.h5_file = h5py.File(file_pth)
@@ -295,8 +296,59 @@ class splitData:
 
     def index_split_by_label(self,
                     ) -> None:
-        print(np.unique(np.array(self.h5_labels)))
+        # Clear the terminal
+        os.system("clear")
+
+        # Set json folder path
+        json_folder = self.current_dir/"json"
+        json_folder.mkdir(exist_ok=True, parents=True)
+        idx_pth = json_folder/f"idx_by_label--{self.file_pth.name}.json"
+
+        # Get unique labels
+        self.labels_list = np.unique(np.array(self.h5_labels)).astype("str")
+        idx_by_label = dict.fromkeys(self.labels_list)
+
+        # If there's json file, load it. Otherwise, create one.
+        # It doesn't take that long.
+        if not idx_pth.is_file():
+            for label in self.labels_list:
+                print(f"Loop for {label}...")
+                temp_list = []
+
+                for i in tqdm(range(self.h5_len)):
+
+                    if label == str(self.h5_labels[i]):
+                        temp_list.append(i)
+
+                print()
+                idx_by_label[label] = temp_list
+
+            with open(idx_pth, "w") as f:
+                json.dump(idx_by_label, f, indent=4)
+                f.close()
+
+        else:
+            with open(idx_pth, "r") as f:
+                idx_by_label = json.load(f)
+                f.close()
+
+        keys_list = idx_by_label.keys()
+        keys_list = [int(k) for k in keys_list]
+
+        idx_by_label_copy = idx_by_label.copy()
+        idx_by_label = dict.fromkeys(keys_list)
+        for k in keys_list:
+            idx_by_label[k] = idx_by_label_copy[str(k)]
+
+        self.idx_by_label = idx_by_label
+
+    def index_split_by_source(self,
+                              ) -> None:
+        for label in self.labels_list:
+            
+            pass
+
 
 if __name__ == "__main__":
-    split_data = splitData("/Users/minseok/DEEPLY/data/gunshot_modified_valid_v_0.1.6.h5")
+    split_data = splitData("/data/ListenCity/gunshot_train_v_0.1.6.h5")
     split_data.index_split_by_label()
