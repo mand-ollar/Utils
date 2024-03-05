@@ -1,5 +1,5 @@
 # Utils
-Various tools which makes working process easier. 
+Various tools which make working process easier. 
  
 
 ## open-h5
