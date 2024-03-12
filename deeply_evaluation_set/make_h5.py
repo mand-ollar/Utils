@@ -1,4 +1,6 @@
 from pathlib import Path
+global working_dir
+working_dir = Path.home()/"Developer"
 
 import h5py
 import numpy as np
@@ -10,27 +12,9 @@ import check_stat
 
 def make_h5():
     # class dictionary
-    classes = {'baby_crying': 0,
-               'baby_laughter': 1,
-               'breath': 2,
-               'cat': 3,
-               'cough': 4,
-               'dog': 5,
-               'doorbell': 6,
-               'knock': 7,
-               'sneeze': 8,
-               'snoring': 9, 
-               'speech': 10,
-               'throat_clearing': 11,
-               'vaccum_cleaner': 12,
-               'gunshot': 13,
-               'screaming': 14,
-               'glass_break': 15,
-               'car': 16,
-               'car_horn': 17,
-               'siren': 18,
-               'motorcycle': 19,
-               }
+    folders = list((working_dir/"Utils/deeply_evaluation_set/src").iterdir())
+    classes_list = sorted([f.name for f in folders if f.is_dir()])
+    classes = {k: i for i, k in enumerate(classes_list)}
     reverse_classes = {v: k for k, v in classes.items()}
 
     # sort folder list by order of classes dictionary
@@ -68,7 +52,7 @@ def make_h5():
     print()
 
     print("EVALUATION SET STATUS")
-    check_stat.check_stat(list(classes.keys()))
+    check_stat.check_stat(classes_list)
 
 
 if __name__ == "__main__":
