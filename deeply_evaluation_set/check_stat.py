@@ -6,14 +6,17 @@ import h5py
 from tqdm import tqdm
 from tabulate import tabulate
 
-def check_stat():
+from make_h5 import make_h5
+
+def check_stat(classes: list,
+               ):
 
     ## arguements #####################################################
     current_pth = Path(__file__).parent
 
     path_dataset = current_pth/"Deeply_evaluation.h5"
-    classes = ['baby_crying', 'baby_laughter', 'breath', 'cat', 'cough', 'dog', 'doorbell', 'knock', 'sneeze', 'snoring', 
-            'speech', 'throat_clearing', 'vaccum_cleaner', 'gunshot']
+    # classes = ['baby_crying', 'baby_laughter', 'breath', 'cat', 'cough', 'dog', 'doorbell', 'knock', 'sneeze', 'snoring', 
+    #         'speech', 'throat_clearing', 'vaccum_cleaner', 'gunshot']
     ###################################################################
 
     dataset = h5py.File(path_dataset, 'r')
