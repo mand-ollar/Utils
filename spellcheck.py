@@ -7,7 +7,7 @@ import sys
 class spellCheck:
     def __init__(self,
                  file_pth: str = "thisisnotapath"  # yaml file path: make sure the file is in DDM/config
-                 ):
+                 ) -> None:
         # yaml file path: make sure the file is in DDM/config
         if file_pth == "thisisnotapath":
             file_pth = Path(input("Enter the yaml file path: "))
@@ -78,8 +78,11 @@ class spellCheck:
                         num_error += 1
 
         print(f"{num_error} errors found!")
+        self.num_error = num_error
 
-        return True if num_error == 0 else False
+    def anyError(self,
+                 ):
+        return False if self.num_error == 0 else True
 
 
 if __name__ == "__main__":
