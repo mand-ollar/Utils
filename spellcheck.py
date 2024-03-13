@@ -79,6 +79,8 @@ class spellCheck:
 
         print(f"{num_error} errors found!")
 
+        return True if num_error == 0 else False
+
 
 if __name__ == "__main__":
     spellCheck("/Users/minseok/DEEPLY/DAL/DDM/config/test.yaml")
