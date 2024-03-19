@@ -17,3 +17,6 @@ Contains data of various classes.
 
 ## split_data
 Split set by train / valid.
+
+## convert-to-wave
+Convert non-wav audio files into wav.
