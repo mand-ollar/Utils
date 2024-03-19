@@ -15,6 +15,11 @@ def conver_to_wav():
     for i in tqdm(range(len(wav_list))):
         file_name = wav_list[i].stem
         file_extension = wav_list[i].suffix[1:]
+        audio_file_extensions = ["mp3", "wav", "ogg", "flac", "m4a", "wma",
+                                 "aac", "aiff", "alac", "amr", "dts", "ac3",
+                                 "midi", "opus", "ra", "raw", "vox", "weba",
+                                 "8svx", "cda"]
+        if file_extension not in audio_file_extensions: continue
 
         # NO EXTENSION
         if file_extension == "":
