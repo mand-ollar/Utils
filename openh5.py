@@ -10,6 +10,16 @@ import argparse
 
 class openh5:
     def __init__(self):
+        print("""
+                                ,--.     ,-----.
+ ,---.  ,---.  ,---. ,--,--,    |  ,---. |  .--'
+| .-. || .-. || .-. :|      \   |  .-.  |'--. `\\
+' '-' '| '-' '\   --.|  ||  |   |  | |  |.--'  /
+ `---' |  |-'  `----'`--''--'   `--' `--'`----' 
+       `--'                                     
+""")
+        print("Welcome to openh5!\n")
+
         parser = argparse.ArgumentParser(description="filepath")
         parser.add_argument("--pth", dest="filepath", type=str, help="filepath")
         args = parser.parse_args()
