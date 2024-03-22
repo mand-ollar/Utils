@@ -1,6 +1,5 @@
 import os
 import socket
-import pexpect
 
 ## FIND LOCAL IP
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
