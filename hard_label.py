@@ -77,6 +77,6 @@ class hardLabel:
 
         hard_labels = []
         for start_idx, end_idx in track(merged_gunshot_events, description="Labeling..."):
-            hard_labels.append(audio[start_idx:end_idx])
+            hard_labels.append((start_idx, end_idx))
 
         return hard_labels
