@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 from rich.progress import track
 
 from pathlib import Path
@@ -72,11 +73,12 @@ class hardLabel:
                                              energy_thres=energy_thres,
                                              )
         merged_gunshot_events = self._merge_close_intervals(intervals=gunshot_events,
+                                                            min_gap=0.1,
                                                             sr=sr,
                                                             )
 
         hard_labels = []
         for start_idx, end_idx in track(merged_gunshot_events, description="Labeling..."):
-            hard_labels.append((start_idx, end_idx))
+            hard_labels.append((start_idx * self.frame_size, end_idx * self.frame_size))
 
         return hard_labels
